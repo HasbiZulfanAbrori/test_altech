@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <!-- Brand/logo -->
+      <a class="navbar-brand" href="#">My Library</a>
+      
+      <!-- Toggler/collapsible Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to 'Daftar Penulis', authors_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Daftar Buku', books_path, class: 'nav-link' %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="mt-5 mb-4">Daftar Buku</h1>
+    <%= link_to 'Tambah Buku Baru', new_book_path, class: 'btn btn-success' %>
+    <!-- Tabel Daftar Buku -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Judul</th>
+          <th scope="col">Tahun Terbit</th>
+          <th scope="col">Penulis</th>
+          <th scope="col">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @books.each_with_index do |book, index| %>
+          <tr>
+            <td><%= book.id %></td>
+            <td><%= book.title %></td>
+            <td><%= book.publication_year %></td>
+            <td><%= book.author.author_name %></td>
+            <td>
+              <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-warning btn-sm' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- Pagination links -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <%= will_paginate @books, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      </ul>
+    </nav>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-3R9j9Xz4S5F5m5Oj3zdzgHd5z5sm8b8fzb5t78EF5PZbzqF5CqzW5F5B6a0b5I3L1" crossorigin="anonymous"></script>
+</body>
+</html>

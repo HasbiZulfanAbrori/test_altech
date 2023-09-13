@@ -1,0 +1,74 @@
+<!-- app/views/books/create.html.erb -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library - Add a New Book</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <!-- Brand/logo -->
+      <a class="navbar-brand" href="#">My Library</a>
+      
+      <!-- Toggler/collapsibe Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to 'Daftar Penulis', authors_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Daftar Buku', books_path, class: 'nav-link' %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <h1 class="mb-4">Add a New Book</h1>
+    <%= form_with model: @book, url: books_path, method: :post, class: 'needs-validation', novalidate: true do |form| %>
+      <% if @book.errors.any? %>
+        <div class="alert alert-danger">
+          <ul>
+            <% @book.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="mb-3">
+        <%= form.label :title, class: 'form-label' %>
+        <%= form.text_field :title, class: 'form-control', required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :publication_year, class: 'form-label' %>
+        <%= form.number_field :publication_year, class: 'form-control', required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :author_id, class: 'form-label' %>
+        <%= form.collection_select :author_id, Author.all, :id, :author_name, { prompt: 'Select an author' }, { class: 'form-select', required: true } %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.submit 'Add Book', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
+  <script>
+    // Client-side form validation using HTML5 constraints
+    // You can add custom validation logic here if needed
+  </script>
+</body>
+</html>

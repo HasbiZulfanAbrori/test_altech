@@ -1,0 +1,58 @@
+<!-- app/views/layouts/application.html.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Buku</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <!-- Brand/logo -->
+      <a class="navbar-brand" href="#">My Library</a>
+      
+      <!-- Toggler/collapsibe Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to 'Daftar Penulis', authors_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Daftar Buku', books_path, class: 'nav-link' %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="container mt-5">
+  <h1>Edit Buku</h1>
+
+  <%= form_with(model: @book, local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :title, 'Judul' %>
+      <%= form.text_field :title, class: 'form-control', value: @book.title %>
+    </div>
+    <div class="form-group">
+      <%= form.label :publication_year, 'Tahun Terbit' %>
+      <%= form.number_field :publication_year, class: 'form-control',value: @book.publication_year %>
+    </div>
+    <div class="form-group">
+      <%= form.label :author_id, 'Penulis' %>
+      <%= form.collection_select :author_id, Author.all, :id, :author_name, { prompt: 'Pilih penulis' }, { class: 'form-select', selected: @book.author_id } %>
+    </div>
+
+    <%= form.submit 'Simpan', class: 'btn btn-primary mt-3' %>
+    <%= link_to 'Kembali', books_path, class: 'btn btn-secondary mt-3' %>
+  <% end %>
+</div>
+
+</body>
+</html>
